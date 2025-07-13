@@ -27,3 +27,9 @@ console.log(typeof score)//object
 console.log(typeof myfunc)//function object
 console.log(typeof hero)//object
 console.log(typeof id)//symbol
+//*****************************************
+
+//stack memory(primitive) and heap memory(non primitive)
+//stack->copy of variable
+//heap->reference of variable
+//objects will have similar reference to the same object
