@@ -15,7 +15,7 @@ Built with **FastAPI, React, ONNX models, and multi-layered AI validation**, thi
 3. [OCR & Document Intelligence](#ocr--document-intelligence)
 4. [Verification & Validation](#verification--validation)
 5. [Demo](#demo)
-6. [High-Level Design (HLD)](#high-level-design-(hld))
+6. [High Level Design](#high-level-design)
 7. [Project Structure](#project-structure)
 8. [API Endpoints](#api-endpoints)  
 9. [Quick Start](#quick-start)
@@ -117,7 +117,7 @@ Final step to ensure **financial identity consistency**
 
 ---
 
-## High-Level Design (HLD)
+## High Level Design
 ```mermaid
 graph TD
     User((User)) -->|HTTPS| FE[React Frontend]
