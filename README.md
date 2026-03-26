@@ -204,8 +204,6 @@ npm run dev
 | `POST` | `/api/v1/auth/login` | — | Authenticate user and return JWT |
 | `POST` | `/api/v1/otp/verify` | — | Verify email OTP |
 
----
-
 ### Liveness & Biometrics
 
 | Method | Path | Auth | Description |
@@ -214,8 +212,6 @@ npm run dev
 | `POST` | `/api/v1/liveness/detect` | Bearer Token | Analyze frame for liveness & spoofing |
 | `GET` | `/api/v1/liveness/session/result/{session_id}` | Bearer Token | Get final liveness result |
 
----
-
 ### Document OCR
 
 | Method | Path | Auth | Description |
@@ -223,16 +219,12 @@ npm run dev
 | `POST` | `/api/v1/ocr/extract-aadhaar-front` | Bearer Token | Extract Aadhaar front details |
 | `POST` | `/api/v1/ocr/extract-pan` | Bearer Token | Extract PAN card details |
 
----
-
 ### e-KYC Workflow
 
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
 | `POST` | `/api/v1/ekyc/session/save-documents` | Bearer Token | Save extracted OCR data |
 | `POST` | `/api/v1/ekyc/complete` | Bearer Token | Finalize e-KYC verification |
-
----
 
 ### Utility
 
