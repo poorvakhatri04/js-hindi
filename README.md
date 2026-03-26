@@ -42,17 +42,98 @@ Unlike basic KYC systems, this solution is designed to be:
 - **Extensible for compliance frameworks (UIDAI / RBI / KYC norms)**
 
 ---
+## Liveness Detection System
 
-## Tech Stack
+A **multi-layered anti-spoofing pipeline** designed to prevent fraud and ensure real human presence.
 
-| Component | Technology |
-| :--- | :--- |
-| **Backend** | Python, FastAPI, SQLAlchemy, Pydantic |
-| **AI/ML** | MediaPipe Face Landmarker, MiniFASNet, InsightFace, ONNX Runtime |
-| **Frontend** | React.js, Vite, Tailwind CSS, Lucide Icons, Axios |
-| **APIs** | Sarvam AI, Google Gemini AI (Flash 2.0), SMTP for OTP |
-| **Storage** | SQLite (Dev) / PostgreSQL (Prod) |
+### Models & Techniques
 
+- **MiniFASNetV2 (ONNX)** → Face anti-spoofing  
+- **MediaPipe Face Landmarks** → Real-time face tracking  
+- **Moire Pattern Detection** → Detects screen replay attacks  
+- **Texture Analysis** → Identifies printed/photo spoof attempts  
+- **Behavioral Tracking** → Dot-follow head/eye movement validation  
+- **Deepfake Detection** → Frame-level anomaly and synthetic face detection  
+
+### Why Multi-Layer?
+
+Single-model systems fail in real-world fraud scenarios.  
+This system combines:
+
+- **Behavioral signals** (movement tracking)
+- **Visual signals** (face + texture)
+- **Statistical signals** (model confidence & anomalies)
+
+ Result: **Higher accuracy and stronger fraud resistance**
+
+---
+
+## OCR & Document Intelligence
+
+### Dual-Layer Extraction Strategy
+
+| Layer | Tool | Purpose |
+|------|------|--------|
+| Primary | Sarvam API | Structured data extraction |
+| Fallback | Gemini Vision | Robust fallback for low-quality images |
+
+### Aadhaar Handling
+
+- **Front Side** → Name, DOB, Gender, Aadhaar Number  
+- **Back Side** → Full Address  
+- **Final Output** → Merged structured identity profile  
+
+---
+
+## Verification & Validation
+
+### Identity Checks
+
+- Aadhaar validation (UIDAI)
+- PAN validation (NSDL)
+- Cross-verification of:
+  - Name  
+  - Date of Birth  
+
+Ensures both documents belong to the same individual  
+
+---
+
+### Bank Verification
+
+- **API-based validation using Deepvue**
+- Confirms:
+  - Account holder name matches KYC identity  
+
+Final step to ensure **financial identity consistency**
+
+---
+### Demo
+<img width="1919" height="901" alt="Screenshot 2026-03-26 152737" src="https://github.com/user-attachments/assets/8239628e-590c-45c0-9861-58e9d186ce9f" />
+<img width="1110" height="892" alt="Screenshot 2026-03-26 153036" src="https://github.com/user-attachments/assets/5fc8604a-1425-4af0-bc6b-ef7ba71453da" />
+<img width="699" height="899" alt="Screenshot 2026-03-26 152937" src="https://github.com/user-attachments/assets/876eeae7-1e24-4e7e-b8af-f9602098b6ff" />
+<img width="1043" height="904" alt="Screenshot 2026-03-26 152837" src="https://github.com/user-attachments/assets/1467db0b-d28d-4492-a08c-fdaa98116411" />
+
+---
+
+## High-Level Design (HLD)
+```mermaid
+graph TD
+    User((User)) -->|HTTPS| FE[React Frontend]
+    subgraph "Video-EKYC-DAILOQA Backend"
+        API[FastAPI Gateway]
+        Auth[Auth & OTP Service]
+        Liveness[Liveness Engine]
+        OCR[OCR Extraction Service]
+        EKYC[Workflow Orchestrator]
+    end
+    
+    Liveness --> MP[MediaPipe & MiniFASNet]
+    OCR --> Sarvam[Sarvam AI API]
+    OCR --> Gemini[Gemini 2.0 Fallback]
+    EKYC --> MockBank[Mock UIDAI/NSDL API]
+    API --> DB[(SQLite/PostgreSQL)]
+```
 ---
 
 ## Project Structure
@@ -171,31 +252,6 @@ Unlike basic KYC systems, this solution is designed to be:
 ```
 ---
 
-## Quick Start
-
-### 1. Backend Setup
-
-```bash
-cd backend
-uv venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-uv pip install -e .
-```
-### 2. Start the server
-
-```bash
-cd backend
-uvicorn app.main:app --reload
-```
-### 3. Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
----
-
 ##  API Endpoints
 
 | Method | Path | Auth | Description |
@@ -233,72 +289,48 @@ npm run dev
 | `GET` | `/health` | — | Health check endpoint |
 
 ---
-## Liveness Detection System
+## Quick Start
 
-A **multi-layered anti-spoofing pipeline** designed to prevent fraud and ensure real human presence.
+### 1. Backend Setup
 
-### Models & Techniques
+```bash
+cd backend
+uv venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+uv pip install -e .
+```
+### 2. Start the server
 
-- **MiniFASNetV2 (ONNX)** → Face anti-spoofing  
-- **MediaPipe Face Landmarks** → Real-time face tracking  
-- **Moire Pattern Detection** → Detects screen replay attacks  
-- **Texture Analysis** → Identifies printed/photo spoof attempts  
-- **Behavioral Tracking** → Dot-follow head/eye movement validation  
-- **Deepfake Detection** → Frame-level anomaly and synthetic face detection  
+```bash
+cd backend
+uvicorn app.main:app --reload
+```
+### 3. Frontend Setup
 
-### Why Multi-Layer?
+```bash
+cd frontend
+npm install
+npm run dev
+```
+---
+## Tech Stack
 
-Single-model systems fail in real-world fraud scenarios.  
-This system combines:
-
-- **Behavioral signals** (movement tracking)
-- **Visual signals** (face + texture)
-- **Statistical signals** (model confidence & anomalies)
-
- Result: **Higher accuracy and stronger fraud resistance**
+| Component | Technology |
+| :--- | :--- |
+| **Backend** | Python, FastAPI, SQLAlchemy, Pydantic |
+| **AI/ML** | MediaPipe Face Landmarker, MiniFASNet, InsightFace, ONNX Runtime |
+| **Frontend** | React.js, Vite, Tailwind CSS, Lucide Icons, Axios |
+| **APIs** | Sarvam AI, Google Gemini AI (Flash 2.0), SMTP for OTP |
+| **Storage** | SQLite (Dev) / PostgreSQL (Prod) |
 
 ---
-
-## OCR & Document Intelligence
-
-### Dual-Layer Extraction Strategy
-
-| Layer | Tool | Purpose |
-|------|------|--------|
-| Primary | Sarvam API | Structured data extraction |
-| Fallback | Gemini Vision | Robust fallback for low-quality images |
-
-### Aadhaar Handling
-
-- **Front Side** → Name, DOB, Gender, Aadhaar Number  
-- **Back Side** → Full Address  
-- **Final Output** → Merged structured identity profile  
-
+## Security Features
+- Anti-Spoofing: Protection against high-res photos, video replays, and 3D masks.
+- JWT Auth: Secure session management.
+- OTP Verification: Email-based verification for user registration.
+- Session Snapshots: Captures granular evidence during the liveness process for auditing.
 ---
 
-## Verification & Validation
-
-### Identity Checks
-
-- Aadhaar validation (Mock / UIDAI integration)
-- PAN validation (NSDL)
-- Cross-verification of:
-  - Name  
-  - Date of Birth  
-
-Ensures both documents belong to the same individual  
-
----
-
-### Bank Verification
-
-- **Penny Drop / API-based validation**
-- Confirms:
-  - Account holder name matches KYC identity  
-
-Final step to ensure **financial identity consistency**
-
----
 ## Multi-Layered Technical Sequence
 ```mermaid
 sequenceDiagram
@@ -393,31 +425,8 @@ erDiagram
 ```
 ---
 
-## High-Level Design (HLD)
-```mermaid
-graph TD
-    User((User)) -->|HTTPS| FE[React Frontend]
-    subgraph "Video-EKYC-DAILOQA Backend"
-        API[FastAPI Gateway]
-        Auth[Auth & OTP Service]
-        Liveness[Liveness Engine]
-        OCR[OCR Extraction Service]
-        EKYC[Workflow Orchestrator]
-    end
-    
-    Liveness --> MP[MediaPipe & MiniFASNet]
-    OCR --> Sarvam[Sarvam AI API]
-    OCR --> Gemini[Gemini 2.0 Fallback]
-    EKYC --> MockBank[Mock UIDAI/NSDL API]
-    API --> DB[(SQLite/PostgreSQL)]
-```
----
-
-## Security Features
-- Anti-Spoofing: Protection against high-res photos, video replays, and 3D masks.
-- JWT Auth: Secure session management.
-- OTP Verification: Email-based verification for user registration.
-- Session Snapshots: Captures granular evidence during the liveness process for auditing.
-
 ## License
-This project is for internal use and compliance testing.
+
+This project is provided for **educational, internal use, and compliance testing purposes only**.
+
+Unauthorized use, reproduction, modification, or distribution of this software for commercial purposes is strictly prohibited without prior permission from the author.
