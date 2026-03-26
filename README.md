@@ -168,6 +168,26 @@ erDiagram
 ```
 ---
 
+## 🏛️ High-Level Design (HLD)
+```mermaid
+graph TD
+    User((User)) -->|HTTPS| FE[React Frontend]
+    subgraph "Video-EKYC-DAILOQA Backend"
+        API[FastAPI Gateway]
+        Auth[Auth & OTP Service]
+        Liveness[Liveness Engine]
+        OCR[OCR Extraction Service]
+        EKYC[Workflow Orchestrator]
+    end
+    
+    Liveness --> MP[MediaPipe & MiniFASNet]
+    OCR --> Sarvam[Sarvam AI API]
+    OCR --> Gemini[Gemini 2.0 Fallback]
+    EKYC --> MockBank[Mock UIDAI/NSDL API]
+    API --> DB[(SQLite/PostgreSQL)]
+```
+---
+
 ## 📡 API Endpoints Reference
 
 ### 🛡️ Authentication
