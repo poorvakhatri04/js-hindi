@@ -62,15 +62,117 @@ We utilize a primary-and-fallback mechanism to ensure maximum extraction accurac
 
 ## 📂 Project Structure
 
-### [Backend](./backend)
-- `app/api/v1/`: API endpoints for Auth, EKYC, Liveness, and OCR.
-- `app/services/liveness/`: The core Liveness Engine including `deepfake_service.py` and `texture_service.py`.
-- `app/models/`: Pre-trained ONNX models for face landmarker and anti-spoofing.
-
-### [Frontend](./frontend)
-- `src/components/`: Modular UI components like `LivenessDetection.jsx` and `DocumentCapture.jsx`.
-- `src/services/api.js`: Axios-based client for backend communication.
-- `src/utils/dotTracker.js`: Logic for behavioral liveness head-movement tracking.
+├── backend/ # 🔧 Core backend (FastAPI + AI services)
+│ ├── .venv/ # Python virtual environment
+│
+│ ├── app/ # Main application source
+│ │
+│ │ ├── api/ # 🌐 API layer (routes/controllers)
+│ │ │ └── v1/ # Versioned API (v1)
+│ │ │ ├── auth_routes.py # User auth (register/login/JWT)
+│ │ │ ├── ekyc_routes.py # e-KYC orchestration endpoints
+│ │ │ ├── liveness_routes.py # Real-time liveness detection APIs
+│ │ │ ├── ocr_routes.py # Document OCR endpoints
+│ │ │ └── otp_routes.py # Email OTP verification
+│ │ │
+│ │ ├── core/ # ⚙️ Core utilities & configs
+│ │ │ ├── config.py # Environment + app configuration
+│ │ │ ├── otp.py # OTP generation logic
+│ │ │ └── security.py # JWT, hashing, auth utilities
+│ │ │
+│ │ ├── models/ # 🤖 ML models & assets
+│ │ │ ├── insightface/ # Face recognition models
+│ │ │ ├── face_landmarker.task # MediaPipe face tracking model
+│ │ │ └── minifasnet.onnx # Anti-spoofing CNN model
+│ │ │
+│ │ ├── schemas/ # 📦 Pydantic schemas (data contracts)
+│ │ │ ├── document/ # OCR & document schemas
+│ │ │ ├── ekyc/ # e-KYC workflow schemas
+│ │ │ ├── liveness/ # Liveness request/response schemas
+│ │ │ └── user/ # User/auth schemas
+│ │ │
+│ │ ├── services/ # 🧠 Business logic & AI engines
+│ │ │
+│ │ │ ├── email_verification/ # 📧 OTP email service
+│ │ │ │ ├── generate_otp.py # Generate OTP
+│ │ │ │ └── verify_otp.py # Validate OTP
+│ │ │ │
+│ │ │ ├── liveness/ # 👤 Multi-layer liveness detection engine
+│ │ │ │ ├── behavioral_service.py # Head/eye movement tracking
+│ │ │ │ ├── deepfake_service.py # Deepfake detection (Reality Defender)
+│ │ │ │ ├── depth_service.py # Depth/3D face validation
+│ │ │ │ ├── dot_service.py # Dot tracking logic
+│ │ │ │ ├── liveness_engine.py # Orchestrator (combines all signals)
+│ │ │ │ ├── minifasnet_service.py # CNN anti-spoofing
+│ │ │ │ ├── moire_service.py # Screen replay detection
+│ │ │ │ └── texture_service.py # Texture-based spoof detection
+│ │ │ │
+│ │ │ ├── ocr/ # 📄 Document intelligence layer
+│ │ │ │ ├── extraction_service.py # OCR pipeline controller
+│ │ │ │ ├── gemini_service.py # Gemini fallback OCR
+│ │ │ │ └── sarvam_service.py # Primary OCR (Sarvam API)
+│ │ │ │
+│ │ │ ├── bank_verification.py # 🏦 Bank account validation logic
+│ │ │ └── email_service.py # Email sender (SMTP integration)
+│ │ │
+│ │ ├── session/ # 🔄 Session lifecycle management
+│ │ ├── config.py # App-level config (fallback/global)
+│ │ ├── db.py # Database connection & session
+│ │ ├── main.py # 🚀 FastAPI entrypoint
+│ │ └── models.py # SQLAlchemy DB models
+│ │
+│ ├── session_snapshots/ # 📸 Stored frames (liveness + deepfake checks)
+│ ├── .env # Environment variables (API keys, DB, etc.)
+│ ├── pyproject.toml # Python project configuration
+│ ├── uv.lock # Dependency lock file
+│ └── backend.md # Backend-specific documentation
+│
+├── frontend/ # 🎨 React frontend (Vite + Tailwind)
+│ ├── node_modules/ # Dependencies
+│ │
+│ ├── src/ # Main frontend source
+│ │ ├── components/ # 🧩 UI + feature components
+│ │ │
+│ │ │ ├── ui/ # Reusable design system components
+│ │ │ │ ├── button.jsx
+│ │ │ │ ├── card.jsx
+│ │ │ │ └── input.jsx
+│ │ │ │
+│ │ │ ├── AuthPage.jsx # Login/Register UI
+│ │ │ ├── BankVerification.jsx # Bank verification UI
+│ │ │ ├── Dashboard.jsx # User dashboard
+│ │ │ ├── DocumentCapture.jsx # Upload/capture documents
+│ │ │ ├── DocumentReview.jsx # Review extracted data
+│ │ │ ├── LandingPage.jsx # Marketing/landing page
+│ │ │ ├── LivenessDetection.jsx# Real-time liveness UI
+│ │ │ ├── ProcessSteps.jsx # Step-by-step flow UI
+│ │ │ ├── ResultScreen.jsx # Final verification result
+│ │ │ ├── StepIndicator.jsx # Progress tracker
+│ │ │ └── WelcomeScreen.jsx # Entry screen
+│ │ │
+│ │ ├── lib/ # Utility helpers
+│ │ │ └── utils.js
+│ │ │
+│ │ ├── services/ # 🔌 API integration layer
+│ │ │ └── api.js # Axios client (backend communication)
+│ │ │
+│ │ ├── utils/ # Custom logic
+│ │ │ └── dotTracker.js # Behavioral liveness tracking logic
+│ │ │
+│ │ ├── App.jsx # Root component
+│ │ ├── index.css # Global styles
+│ │ └── main.jsx # React entrypoint
+│ │
+│ ├── index.html # HTML template
+│ ├── package.json # Project dependencies
+│ ├── package-lock.json
+│ ├── postcss.config.js
+│ ├── tailwind.config.js # Tailwind styling config
+│ ├── vite.config.js # Vite bundler config
+│ └── frontend.md # Frontend documentation
+│
+├── .gitignore
+└── README.md
 
 ---
 
