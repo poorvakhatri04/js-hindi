@@ -171,7 +171,7 @@ Unlike basic KYC systems, this solution is designed to be:
 ```
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### 1. Backend Setup
 
@@ -233,7 +233,72 @@ npm run dev
 | `GET` | `/health` | — | Health check endpoint |
 
 ---
+## Liveness Detection System
 
+A **multi-layered anti-spoofing pipeline** designed to prevent fraud and ensure real human presence.
+
+### Models & Techniques
+
+- **MiniFASNetV2 (ONNX)** → Face anti-spoofing  
+- **MediaPipe Face Landmarks** → Real-time face tracking  
+- **Moire Pattern Detection** → Detects screen replay attacks  
+- **Texture Analysis** → Identifies printed/photo spoof attempts  
+- **Behavioral Tracking** → Dot-follow head/eye movement validation  
+- **Deepfake Detection** → Frame-level anomaly and synthetic face detection  
+
+### Why Multi-Layer?
+
+Single-model systems fail in real-world fraud scenarios.  
+This system combines:
+
+- **Behavioral signals** (movement tracking)
+- **Visual signals** (face + texture)
+- **Statistical signals** (model confidence & anomalies)
+
+ Result: **Higher accuracy and stronger fraud resistance**
+
+---
+
+## OCR & Document Intelligence
+
+### Dual-Layer Extraction Strategy
+
+| Layer | Tool | Purpose |
+|------|------|--------|
+| Primary | Sarvam API | Structured data extraction |
+| Fallback | Gemini Vision | Robust fallback for low-quality images |
+
+### Aadhaar Handling
+
+- **Front Side** → Name, DOB, Gender, Aadhaar Number  
+- **Back Side** → Full Address  
+- **Final Output** → Merged structured identity profile  
+
+---
+
+## Verification & Validation
+
+### Identity Checks
+
+- Aadhaar validation (Mock / UIDAI integration)
+- PAN validation (NSDL)
+- Cross-verification of:
+  - Name  
+  - Date of Birth  
+
+Ensures both documents belong to the same individual  
+
+---
+
+### Bank Verification
+
+- **Penny Drop / API-based validation**
+- Confirms:
+  - Account holder name matches KYC identity  
+
+Final step to ensure **financial identity consistency**
+
+---
 ## Multi-Layered Technical Sequence
 ```mermaid
 sequenceDiagram
