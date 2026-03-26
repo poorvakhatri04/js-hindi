@@ -125,16 +125,19 @@ sequenceDiagram
 ## 📊 Entity Relationship (ER) Diagram
 ```mermaid
 erDiagram
-    USER ||--o{ EKYC_SESSION : "starts"
-    EKYC_SESSION ||--o{ DOCUMENT : "persists"
-    
+    USER ||--o{ EKYC_SESSION : "initiates"
+    EKYC_SESSION ||--o{ DOCUMENT : "contains"
+    EKYC_SESSION ||--o{ LIVENESS_RESULT : "validates"
+
     USER {
         uuid id PK
-        string email UK
-        string kyc_status "pending | completed"
+        string name
+        string email
+        string phone
+        string kyc_status
         boolean is_kyc_completed
     }
-    
+
     EKYC_SESSION {
         uuid id PK
         uuid user_id FK
@@ -142,17 +145,25 @@ erDiagram
         boolean aadhaar_verified
         boolean pan_verified
         string status "pending | completed"
-        json verified_form "confirmed fields"
-        json bank_result "API logs"
+        json aadhaar_data
+        json pan_data
     }
-    
+
     DOCUMENT {
         uuid id PK
         uuid session_id FK
         string document_type "aadhaar_front | pan"
         string document_number
-        json ocr_data "raw extraction"
+        json ocr_data
         boolean verified
+    }
+
+    LIVENESS_RESULT {
+        uuid id PK
+        uuid session_id FK
+        float confidence
+        boolean result
+        json check_details "CNN, Moire, Texture"
     }
 ```
 ---
