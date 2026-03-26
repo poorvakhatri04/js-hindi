@@ -10,18 +10,20 @@ Built with **FastAPI, React, ONNX models, and multi-layered AI validation**, thi
 
 ## Table of Contents
 
-1. [Project Overview](#project-overview)  
-2. [Project Structure](#project-structure)  
-3. [Quick Start](#quick-start)  
-4. [API Endpoints](#api-endpoints)  
-5. [System Architecture](#system-architecture)  
-6. [e-KYC Pipeline](#e-kyc-pipeline)  
-7. [Liveness Detection System](#liveness-detection-system)  
-8. [OCR & Document Intelligence](#ocr--document-intelligence)  
-9. [Verification & Validation](#verification--validation)  
-10. [Database Schema](#database-schema)  
-11. [Tech Stack](#tech-stack)  
-12. [Security Features](#security-features)  
+1. [Project Overview](#project-overview)
+2. [Liveness Detection System](#liveness-detection-system)
+3. [OCR & Document Intelligence](#ocr--document-intelligence)
+4. [Verification & Validation](#verification--validation)
+5. [Demo](#demo)
+6. [High-Level Design (HLD)](#high-level-design-(hld))
+7. [Project Structure](#project-structure)
+8. [API Endpoints](#api-endpoints)  
+9. [Quick Start](#quick-start)
+10. [Tech Stack](#tech-stack)
+11. [Security Features](#security-features)
+12. [System Architecture](#system-architecture)
+13. [Database Schema](#database-schema)
+14. [License](#license) 
 
 ---
 
@@ -108,7 +110,7 @@ Ensures both documents belong to the same individual
 Final step to ensure **financial identity consistency**
 
 ---
-### Demo
+## Demo
 <img width="1919" height="901" alt="Screenshot 2026-03-26 152737" src="https://github.com/user-attachments/assets/8239628e-590c-45c0-9861-58e9d186ce9f" />
 <img width="1043" height="904" alt="Screenshot 2026-03-26 152837" src="https://github.com/user-attachments/assets/1467db0b-d28d-4492-a08c-fdaa98116411" />
 <img width="1110" height="892" alt="Screenshot 2026-03-26 153036" src="https://github.com/user-attachments/assets/5fc8604a-1425-4af0-bc6b-ef7ba71453da" />
