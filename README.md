@@ -110,9 +110,9 @@ Final step to ensure **financial identity consistency**
 ---
 ### Demo
 <img width="1919" height="901" alt="Screenshot 2026-03-26 152737" src="https://github.com/user-attachments/assets/8239628e-590c-45c0-9861-58e9d186ce9f" />
-<img width="1110" height="892" alt="Screenshot 2026-03-26 153036" src="https://github.com/user-attachments/assets/5fc8604a-1425-4af0-bc6b-ef7ba71453da" />
-<img width="699" height="899" alt="Screenshot 2026-03-26 152937" src="https://github.com/user-attachments/assets/876eeae7-1e24-4e7e-b8af-f9602098b6ff" />
 <img width="1043" height="904" alt="Screenshot 2026-03-26 152837" src="https://github.com/user-attachments/assets/1467db0b-d28d-4492-a08c-fdaa98116411" />
+<img width="699" height="899" alt="Screenshot 2026-03-26 152937" src="https://github.com/user-attachments/assets/876eeae7-1e24-4e7e-b8af-f9602098b6ff" />
+<img width="1110" height="892" alt="Screenshot 2026-03-26 153036" src="https://github.com/user-attachments/assets/5fc8604a-1425-4af0-bc6b-ef7ba71453da" />
 
 ---
 
