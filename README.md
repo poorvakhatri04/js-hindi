@@ -122,6 +122,41 @@ sequenceDiagram
 ```
 ---
 
+## 📊 Entity Relationship (ER) Diagram
+```mermaid
+erDiagram
+    USER ||--o{ EKYC_SESSION : "starts"
+    EKYC_SESSION ||--o{ DOCUMENT : "persists"
+    
+    USER {
+        uuid id PK
+        string email UK
+        string kyc_status "pending | completed"
+        boolean is_kyc_completed
+    }
+    
+    EKYC_SESSION {
+        uuid id PK
+        uuid user_id FK
+        boolean liveness_verified
+        boolean aadhaar_verified
+        boolean pan_verified
+        string status "pending | completed"
+        json verified_form "confirmed fields"
+        json bank_result "API logs"
+    }
+    
+    DOCUMENT {
+        uuid id PK
+        uuid session_id FK
+        string document_type "aadhaar_front | pan"
+        string document_number
+        json ocr_data "raw extraction"
+        boolean verified
+    }
+```
+---
+
 ## 📡 API Endpoints Reference
 
 ### 🛡️ Authentication
