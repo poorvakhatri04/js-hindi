@@ -21,8 +21,8 @@ Built with **FastAPI, React, ONNX models, and multi-layered AI validation**, thi
 9. [Quick Start](#quick-start)
 10. [Tech Stack](#tech-stack)
 11. [Security Features](#security-features)
-12. [System Architecture](#system-architecture)
-13. [Database Schema](#database-schema)
+12. [Multi Layered Technical Sequence](#multi-layered-technical-sequence)
+13. [Entity Relationship Diagram](#entity-relationship-diagram)
 14. [License](#license) 
 
 ---
@@ -332,7 +332,7 @@ npm run dev
 - Session Snapshots: Captures granular evidence during the liveness process for auditing.
 ---
 
-## Multi-Layered Technical Sequence
+## Multi Layered Technical Sequence
 ```mermaid
 sequenceDiagram
     participant U as User
@@ -380,7 +380,7 @@ sequenceDiagram
 ```
 ---
 
-## Entity Relationship (ER) Diagram
+## Entity Relationship Diagram
 ```mermaid
 erDiagram
     USER ||--o{ EKYC_SESSION : "initiates"
