@@ -61,7 +61,8 @@ We utilize a primary-and-fallback mechanism to ensure maximum extraction accurac
 ---
 
 ## 📂 Project Structure
-
+```
+.
 ├── backend/ # 🔧 Core backend (FastAPI + AI services)
 │ ├── .venv/ # Python virtual environment
 │
@@ -173,7 +174,7 @@ We utilize a primary-and-fallback mechanism to ensure maximum extraction accurac
 │
 ├── .gitignore
 └── README.md
-
+```
 ---
 
 ## 🔄 Multi-Layered Technical Sequence
